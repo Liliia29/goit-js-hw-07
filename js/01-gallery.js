@@ -1,64 +1,35 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
-
-
-// import '../basiclightbox/dist/basicLightbox.min.css';
-const gallery = document.querySelector('.gallery');
-
-gallery.addEventListener('click', e => {
-  e.preventDefault();
-  
-  if (e.target.classList.contains('gallery__image')) {
-    const imageSrc = e.target.dataset.source;
-    
+console.log(galleryItems);
+const imageContainer = document.querySelector('.gallery');
+const imageMarkup = createImageCardMarkup(galleryItems);
+imageContainer.insertAdjacentHTML('beforeend', imageMarkup);
+imageContainer.addEventListener('click', onImageContainerClick);
+function createImageCardMarkup(galleryItems) {
+    return galleryItems.map(({ preview, original, description }) => {
+        return `<div class="gallery__item">
+                    <a class="gallery__link" href="${original}">
+                        <img
+                            class="gallery__image"
+                            src="${preview}"
+                            data-source="${original}"
+                            alt="${description}"
+                        />
+                    </a>
+                </div>`
+    }).join('');
+}
+function onImageContainerClick(evt) {
+    const isImgSwatchEl = evt.target.classList.contains('gallery__image');
+    if (!isImgSwatchEl) {
+        return;
+    }
+    evt.preventDefault();
     const instance = basicLightbox.create(`
-    <li class="gallery__item">
-    <a class="gallery__link" href="${original}">
-    <img class="gallery__image"
-    src="${preview}"
-    data-source="${original}"
-    alt="${description}"
-    />
-    </a>
-    </li>
-    `);
-        instance.show();
-    
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') {
-        instance.close();
-      }
-    });
-  }
-});
+    <img src="${evt.target.dataset.source}" >
+`)
+    instance.show()
+}
 
 
-
-
-// const containerImages = document.querySelector('.gallery');
-// const callFunctionGallery = createImagesCards(galleryItems);
-
-// containerImages.insertAdjacentHTML(
-//     'beforeend',
-//     createImagesCards(galleryItems)
-// );
-
-// function createImagesCards(arrayImages){
-//     const markup = arrayImages
-//     .map(({preview, original, description}) => {
-//         return `<li class="gallery__item">
-//         <a class="gallery__link" href="${original}">
-//           <img
-//             class="gallery__image"
-//             src="${preview}"
-//             data-source="${original}"
-//             alt="${description}"
-//           />
-//         </a>
-//       </li>`;
-//     })
-//     return
-   
-    
-// }
-// console.log(galleryItems);
+console.log(galleryItems);
