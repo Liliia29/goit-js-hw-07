@@ -24,10 +24,10 @@ function onImageContainerClick(evt) {
         return;
     }
     evt.preventDefault();
-    const instance = basicLightbox.create(`
-    <img src="${evt.target.dataset.source}" >
-`)
-    instance.show()
+//     const instance = basicLightbox.create(`
+//     <img src="${evt.target.dataset.source}" >
+// `)
+    // instance.show()
 }
  const lightbox = new SimpleLightbox('.gallery a', {
     captions: true,
